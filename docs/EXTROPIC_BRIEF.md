@@ -1,0 +1,45 @@
+# PBit1: a concrete spatial–temporal precision experiment
+
+**Question:** Can each learned parameter be assigned to one programmable
+p-bit, with precision supplied through time and a shared local range?
+
+**Completed result:** All 1,728,801,536 unique learned parameters of
+LiquidAI/LFM3-1.7B were converted to finite probabilistic commands. At 8,192
+samples, five independent Monte Carlo seeds achieved mean perplexity
+75.1547 versus 75.3147 for the same adapted weights executed in BF16.
+The conditional 95% t4 perplexity-ratio interval is 0.98062–1.01544,
+passing the original upper-bound criterion of 1.02 on 2,048 fixed targets.
+
+**Implementation:** Extropic's official THRML factors and Gibbs sampler,
+pinned at `2d54cd8404df85bb65703d7e8b4e84e48c1b72a9`.
+Twelve-bit probability commands, FP32 grouped ranges, ACT12 inputs,
+integer accumulation, and BF16 nonlinearities are explicitly retained.
+Embedding/head aliases share one canonical parameter assignment.
+
+**Cross-GPU result:** Native and nominal arrays replayed bit-for-bit across
+GB10 and H100 in the completed spatial-control bridge. The same-fit BF16
+reference shifted about 0.00515% in perplexity. The original strict bridge
+failure is retained; an explicit later amendment uses H100-specific controls.
+
+**Spatial motivation:** One logical element per parameter gives 4× fewer
+logical p-bits than a four-element positional encoding. It trades spatial
+replication for time; it does not establish a 4× energy or speed gain.
+The measured T8192 run schedules 56.7 trillion retained node evaluations
+per complete validation pass. Controllers, readout, ranges and counters matter.
+
+**What would be useful to investigate with Extropic:** map the unary
+stationary-probability programming interface to actual devices; measure
+calibration and effective independent switching rate; evaluate accumulation
+and controller costs; compare matched quality and transitions against an
+agreed hardware-native representation. Internal K4/K8 controls are not
+a reproduction of a proprietary Extropic parameter representation.
+
+**Current boundary:** This is an independent, installable research SDK and
+a conditional validation result. Reserved fresh-data evaluation has no
+accepted result yet; its initial frontend failure is documented in the archive.
+No physical hardware energy, latency, residency or numerical BF16-equivalence
+claim is made. Probability encoding and stochastic computing are established;
+the contribution investigated here is the measured model-level tradeoff.
+
+[SDK](https://github.com/oramada/pbit1) ·
+[Experiment archive](https://github.com/oramada/pbit1-experiments)
