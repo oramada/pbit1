@@ -1,6 +1,6 @@
 {
-  "recorded_utc": "2026-11-05T21:53:54.926217+00:00",
-  "status": "first_LFM3_native_batch_replayed_exactly_full_fiveseed_study_running",
+  "recorded_utc": "2026-11-05T22:51:36.278240+00:00",
+  "status": "LFM3_heldout_and_additional_fulltask_R1_studies_running",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
   "accepted_matched_resource_cases": 45,
@@ -21,15 +21,26 @@
     "gpt2_predicted_targets": 283225,
     "distilbert_reviews": 25000,
     "distilbert_truncation_fraction": 0.4336,
-    "additional_model_quality_scoring_started": false,
+    "additional_model_quality_scoring_started": true,
     "independent_full_data_manifest_audit": "passed_all283225GPT2targets_and_all25000DistilBERTrows",
     "data_audit_sha256": "a6b79e6b37e543b3fe40712185c99372db96fca389d202c0ca3d74c3bc04b57e",
     "complete_parameter_package_audit": "passed_every191394818learnedscalar",
-    "primary_sampler_state_bit_audit": 1610612736
+    "primary_sampler_state_bit_audit": 1610612736,
+    "actual_model_replacement_and_neural_replay_gate": "passed_bothmodels_all7controls_and_fullparameterT1draw_syntheticonly"
   },
   "systems": "No universal BF16 numerical equivalence, measured physical energy/latency advantage or general-success conclusion.",
   "transport_amendment_sha256": "506546ecaa63ca31973bc4a451813060c803bb44d95e35251b10d32c82f25f6a",
   "completed_recovery_native_batches": 1,
   "legacy_batch0_stage_outputs_bitwise_matched": 4,
-  "remaining_additional_model_gates": "Inferenceandindependentneuralreplayimplementation, actualmodelreplacementpreflight, completeprospectiveexecution/statisticalprotocol, thenfullfixedtasksandall5seeds."
+  "remaining_additional_model_gates": "Full104case queue and complete5seed primary/full independent statistical audits; nonidealities and systemsaccounting remain required.",
+  "R1_execution": {
+    "protocol_sha256": "b003fedc90d962500907e8cf435ca359ab1ef9a27ea3e892c2fe12a17ea79626",
+    "cases": 104,
+    "parallel_H100_case_limit": 4,
+    "deterministic_controls": 14,
+    "native_cases": 90,
+    "first_control_cases_independently_replayed": 12,
+    "snapshot_unix": 1793918533.5365238,
+    "completed_five_seed_primary_quality_report": false
+  }
 }

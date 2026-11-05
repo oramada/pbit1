@@ -45,6 +45,16 @@ The recovered LFM3 study completed its first native batch and matched all four l
 
 Controller and metadata costs are explicit: the K1 programs use 12 control bits per scalar and two float32 range values per group. One logical p-bit per parameter does not imply one-bit total storage. R1 evaluation will reconstruct BF16 weights in software; its timing and memory cannot establish an R2 or physical hardware advantage.
 
+## Full-task R1 study now running
+
+The complete execution and statistical protocol was frozen before the first actual-model task score. **104 cases** cover 14 deterministic controls and 90 stochastic cases: two models × three work budgets × K1/K4/K8 × five fixed seeds. The primary condition remains K1 at C8192. Existing 2% log-perplexity and two-percentage-point accuracy margins are unchanged; both original BF16 and finite-program-mean BF16 comparisons must satisfy the paired MC and data-bootstrap criteria.
+
+Both actual pretrained models first passed all seven controls and a complete-parameter native T1 draw on synthetic inputs, with every BF16 weight and output independently replayed. The first preflight launch failed on nonportable local source paths before model loading; a new version corrected only path portability and retained the original core code and synthetic keys. Real-data batch/label/target alignment and statistical-cohort fixtures also passed before scoring.
+
+Four durable H100 jobs now evaluate the full pinned tasks. Completed cases require an independent replay from saved parameter counts, without new sampling, and bit-identical hashes for every output batch. All classifier logits are retained; language-model outputs retain full batch hashes and target-loss components, with complete neural replay providing verification without storing terabytes of logits. The initial timestamped snapshot records 12 completed deterministic control cases; complete stochastic five-seed quality conclusions remain pending.
+
+The R1 stochastic work budget is **per model reconstruction draw**, reused across the fixed evaluation examples. It must not be presented as per-input R2 execution cost or GPU memory compression. Uniform min/max INT2/4/8 controls include every learned parameter and do not represent specialized production quantization kernels.
+
 ## Inspect and verify
 
 The experimental archive is private at the time of this update. Public aggregate benchmark JSON and independent statistical audit summaries are included in the SDK; the detailed case/source archive requires access.

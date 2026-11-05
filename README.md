@@ -60,7 +60,7 @@ The completed matched-resource analysis now covers **45 accepted cases** with in
 
 ![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
 
-The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved. Cloud recovery and producer checkpoint fixtures now pass, and a new versioned first H100 seed has been submitted; the planned report separately covers the 9,728 previously unexposed targets. GPT-2 and DistilBERT data and all 191.4 million learned parameter codes have passed independent audits before scoring. The full-size H100 sampler fixture also passed; additional-model quality runs are still pending. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
+The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved. Cloud recovery and producer checkpoint fixtures now pass, and a new versioned first H100 seed has been submitted; the planned report separately covers the 9,728 previously unexposed targets. GPT-2 and DistilBERT data and all 191.4 million learned parameter codes have passed independent audits before scoring. Both actual models passed complete-parameter replacement and independent output replay on synthetic inputs. The full-task 104-case study is now running on four parallel H100 jobs; five-seed quality conclusions remain pending. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
 
 ## Install
 
