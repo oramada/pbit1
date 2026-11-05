@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-11-05T23:25:34.914652+00:00",
+  "recorded_utc": "2026-11-05T23:32:29.795763+00:00",
   "status": "mixed_additional_R1_primary_results_audited_full_sweep_and_LFM3_heldout_running",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
@@ -50,5 +50,17 @@
     },
     "primary_completed_case_bindings": 24,
     "statistics_sha256": "b92b6da3f9991518006da6db366fc6bb36558c976902aac96f886a62e82a127d"
+  },
+  "nonideality_evidence": {
+    "independent_correlated_dot_audit": "correlation_audit_20261105.json",
+    "models": 9,
+    "conditions": 108,
+    "saved_state_bits": 6912000,
+    "corruption_fixtures_rejected": 3,
+    "exact_to_naive_variance_range": [
+      0.2396895572513875,
+      7.319554269251502
+    ],
+    "scope": "Small calibrated Ising operators only; no full additional-model nonideal quality result or physical hardware claim."
   }
 }

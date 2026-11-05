@@ -37,8 +37,7 @@ agreed hardware-native representation. Internal K4/K8 controls are not
 a reproduction of a proprietary Extropic parameter representation.
 
 **Current boundary:** This is an independent, installable research SDK and
-a conditional validation result. Reserved fresh-data evaluation has no
-accepted result yet; its initial frontend failure is documented in the archive and the repaired study reached native inference before a platform preemption; checkpointed recovery is being prepared.
+a conditional validation result. The larger LFM3 reserved-data study is running with checkpointed recovery. The first full-task, five-seed R1 primaries are mixed: DistilBERT passes (87.532% versus 87.512% accuracy on IMDb), while GPT-2 misses (31.8679 versus 25.5024 perplexity on WikiText-2). The combined broad primary criterion failed; the complete original sweep continues. [Audited outcomes and scope](BROAD_VERIFICATION_20261105.md).
 No physical hardware energy, latency, residency or numerical BF16-equivalence
 claim is made. Probability encoding and stochastic computing are established;
 the contribution investigated here is the measured model-level tradeoff.
