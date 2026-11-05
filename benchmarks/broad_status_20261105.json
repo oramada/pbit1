@@ -75,7 +75,7 @@
   "highT_preparation": {
     "primitive_CPU_H100_bridge": "passed6488064states",
     "production_tile_timing": "completed,1.53330seconds warmmedianat262144samples",
-    "synthetic_actual_model_integration": "running",
+    "synthetic_actual_model_integration": "passed_all124439808parameters_and_samekey_weight_and_logit_bridge",
     "new_fulltask_scoring_started": false,
     "scope": "OriginalT8192primaryfailure unchanged. CandidateT262144is32timeslogical samplingwork, not an established modelquality or hardware result."
   }
