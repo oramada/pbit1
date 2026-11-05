@@ -35,6 +35,16 @@ Recovery keeps all original keys and criteria. Six legacy outputs are replayed u
 
 Checkpoint/dataset revisions, file hashes, alias inventories, complete parameter coverage, samples, seeds and primary quality criteria were selected before any new-model quality evaluation. Pinned checkpoint and dataset bytes have now passed SHA256 or Git-blob verification, and token geometry is frozen without model forwards. GPT-2 covers all 283,225 within-article predicted targets across 62 articles, with at most 1,024 context tokens and stride 512. DistilBERT retains all 25,000 IMDb test reviews at 256 tokens; 43.36% are truncated. Synthetic layout fixtures check exact target coverage and article boundaries. An independent audit rebuilt every test token, target window and label from the pinned dataset/tokenizer files, using a different article parser and batch layout. Complete stochastic implementation/component/statistical execution gates are still required before quality scoring on either additional model. R1 reconstruction and R2 operator execution are separate regimes and will be reported separately; an R1 result cannot establish R2 hardware costs.
 
+## Complete-parameter and sampler gates
+
+All **191,394,818 learned scalars** now have independently audited finite-control programs: GPT-2 contributes 124,439,808 scalars in 148 canonical tensors; DistilBERT contributes 66,955,010 in 104 tensors. The audit checks every command, local range, BF16 source value and alias against pinned raw safetensors. It accounts for the GPT-2 checkpoint's bare parameter names and verifies its 12 fixed causal masks separately as unlearned state. The original prefix-mismatch audit failure is preserved.
+
+CPU/H100 replay matched all 1,376,256 public sampler bits and count values exactly. A separate primary-budget H100 fixture checked all **1,610,612,736 bits** across K1/K4/K8 using 65,536 sampler lanes, including padding, constants and a short final group. Independent packed-byte population counts and rational-count readouts agree with the official THRML observer. These are primitive checks, not additional neural accuracy results.
+
+The recovered LFM3 study completed its first native batch and matched all four legacy stage outputs bit for bit. Complete 16-batch case audits and the five-seed quality analysis remain pending.
+
+Controller and metadata costs are explicit: the K1 programs use 12 control bits per scalar and two float32 range values per group. One logical p-bit per parameter does not imply one-bit total storage. R1 evaluation will reconstruct BF16 weights in software; its timing and memory cannot establish an R2 or physical hardware advantage.
+
 ## Inspect and verify
 
 The experimental archive is private at the time of this update. Public aggregate benchmark JSON and independent statistical audit summaries are included in the SDK; the detailed case/source archive requires access.
