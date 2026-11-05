@@ -38,7 +38,7 @@ a reproduction of a proprietary Extropic parameter representation.
 
 **Current boundary:** This is an independent, installable research SDK and
 a conditional validation result. Reserved fresh-data evaluation has no
-accepted result yet; its initial frontend failure is documented in the archive and the repaired complete study is running.
+accepted result yet; its initial frontend failure is documented in the archive and the repaired study reached native inference before a platform preemption; checkpointed recovery is being prepared.
 No physical hardware energy, latency, residency or numerical BF16-equivalence
 claim is made. Probability encoding and stochastic computing are established;
 the contribution investigated here is the measured model-level tradeoff.

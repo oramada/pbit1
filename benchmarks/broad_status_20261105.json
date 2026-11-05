@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-11-05T20:52:51.723222+00:00",
+  "status": "H100_study_interrupted_by_Modal_preemption_recovery_in_preparation",
+  "accepted_fresh_data_cases": 0,
+  "completed_native_batch_outputs_preserved": 1,
+  "accepted_matched_resource_cases": 45,
+  "scope": "No fresh-data quality conclusion. Sampling point, MC keys, data and quality margin remain frozen.",
+  "new_full_model_sampling_submitted_after_preemption": false,
+  "local_checkpoint_component": "Real subprocess interruptions passed: completed stage skipped, deterministic replay before commit charged, five corruption types rejected. Modal integration and recovery remain pending."
+}

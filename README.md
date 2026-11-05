@@ -60,7 +60,7 @@ The completed matched-resource analysis now covers **45 accepted cases** with in
 
 ![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
 
-The repaired 10,240-target study is running with a separate report for the 9,728 previously unexposed targets. Additional GPT-2 and DistilBERT checkpoints and evaluation criteria are pinned before scoring. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
+The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved and checkpointed recovery is being prepared; the planned report separately covers the 9,728 previously unexposed targets. Additional GPT-2 and DistilBERT checkpoints and evaluation criteria are pinned before scoring. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
 
 ## Install
 
@@ -173,7 +173,7 @@ reduction into an energy or latency claim.
 
 The full experimental archive is currently **private**; access is required for its detailed artifacts. Public benchmark JSON and independent statistical audit summaries are included in this SDK.
 
-The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved and the repaired version is running. Completed H100 fixed-subset comparisons are included in the verification update.
+The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved; the repaired run was interrupted by platform preemption and recovery is being prepared. Completed H100 fixed-subset comparisons are included in the verification update.
 Physical hardware, drift/calibration at model scale, broad model generalization,
 and a drop-in BF16 replacement remain future work.
 
