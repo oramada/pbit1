@@ -60,7 +60,16 @@ The completed matched-resource analysis now covers **45 accepted cases** with in
 
 ![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
 
-The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved. Cloud recovery and producer checkpoint fixtures now pass, and a new versioned first H100 seed has been submitted; the planned report separately covers the 9,728 previously unexposed targets. GPT-2 and DistilBERT data and all 191.4 million learned parameter codes have passed independent audits before scoring. Both actual models passed complete-parameter replacement and independent output replay on synthetic inputs. The full-task 104-case study is now running on four parallel H100 jobs; five-seed quality conclusions remain pending. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
+The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved. Cloud recovery and producer checkpoint fixtures now pass, and a new versioned first H100 seed has been submitted; the planned report separately covers the 9,728 previously unexposed targets. GPT-2 and DistilBERT data and all 191.4 million learned parameter codes have passed independent audits before scoring. Both actual models passed complete-parameter replacement and independent output replay on synthetic inputs. The full-task 104-case study is running on four parallel H100 jobs; its primary five-seed results are reported below. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
+
+The first full-task, five-seed **R1 primary results are mixed** at one logical p-bit per parameter and 8,192 samples:
+
+| Model and full task | Original BF16 | PBit1 | Frozen quality gate |
+|:---|---:|---:|:---|
+| DistilBERT SST-2 checkpoint · 25,000 IMDb reviews | 87.512% accuracy | 87.532% accuracy | **Passed** · two-percentage-point margin |
+| GPT-2 · 283,225 WikiText-2 targets | 25.5024 perplexity | 31.8679 perplexity | **Missed** · 2% relative perplexity margin |
+
+Every learned parameter, including biases and normalization parameters, was converted. Independent audits replayed every evaluation batch from saved official THRML counts. The combined primary criterion failed; these results do **not** establish general BF16 task-quality equivalence. The original 104-case sweep continues unchanged. These are weight-reconstruction results reused across the test task, with dense BF16 software inference, rather than direct stochastic operator execution. [Primary statistics](benchmarks/r1_primary_20261105.json) · [Independent audit](benchmarks/r1_primary_audit_20261105.json).
 
 ## Install
 

@@ -1,11 +1,11 @@
 {
-  "recorded_utc": "2026-11-05T22:51:36.278240+00:00",
-  "status": "LFM3_heldout_and_additional_fulltask_R1_studies_running",
+  "recorded_utc": "2026-11-05T23:25:34.914652+00:00",
+  "status": "mixed_additional_R1_primary_results_audited_full_sweep_and_LFM3_heldout_running",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
   "accepted_matched_resource_cases": 45,
   "execution_protocol_sha256": "9fab3acd2b01748426fc73a6712029f07e7e73db3826e2a0cc8cd5ba5cd5216e",
-  "scope": "No completed fresh-data quality conclusion. Original samples8192, fiveMCkeys, full10240targets and separate9728previouslyunexposedtargets, modelpoint and2percentmargin remain frozen.",
+  "scope": "Additional-model full-task R1 primary audited: DistilBERT passed, GPT2 missed; joint primary failed. No completed LFM3 fresh-data conclusion. Original protocols and margins retained.",
   "recovery": {
     "cloud_duplicate_claim_and_cross_container_stage_skip_fixture": "passed_using_officialTHRML_CPU",
     "producer_checkpoint_relative_absolute_path_fixture": "passed",
@@ -32,7 +32,7 @@
   "transport_amendment_sha256": "506546ecaa63ca31973bc4a451813060c803bb44d95e35251b10d32c82f25f6a",
   "completed_recovery_native_batches": 1,
   "legacy_batch0_stage_outputs_bitwise_matched": 4,
-  "remaining_additional_model_gates": "Full104case queue and complete5seed primary/full independent statistical audits; nonidealities and systemsaccounting remain required.",
+  "remaining_additional_model_gates": "Finish original104case sweep, diagnose primary miss without changing its criteria; complete nonidealities and systems accounting.",
   "R1_execution": {
     "protocol_sha256": "b003fedc90d962500907e8cf435ca359ab1ef9a27ea3e892c2fe12a17ea79626",
     "cases": 104,
@@ -41,6 +41,14 @@
     "native_cases": 90,
     "first_control_cases_independently_replayed": 12,
     "snapshot_unix": 1793918533.5365238,
-    "completed_five_seed_primary_quality_report": false
+    "completed_five_seed_primary_quality_report": true,
+    "primary_independent_audit": "r1_primary_audit_20261105.json",
+    "primary_both_models_pass": false,
+    "primary_model_pass": {
+      "distilbert": true,
+      "gpt2": false
+    },
+    "primary_completed_case_bindings": 24,
+    "statistics_sha256": "b92b6da3f9991518006da6db366fc6bb36558c976902aac96f886a62e82a127d"
   }
 }
