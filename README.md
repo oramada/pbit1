@@ -54,6 +54,14 @@ perplexity**. A documented later amendment uses H100-specific BF16 controls whil
 keeping the original 2% task-quality threshold. The original strict bitwise-control
 failure is retained in the archive.
 
+## Verification update · November 5
+
+The completed matched-resource analysis now covers **45 accepted cases** with independent statistical auditing. K1 meets the original quality criterion at C8192; K8 meets it at C1024. Relative to that K8 condition, K1 uses **8× fewer logical p-bits**, **8× more retained scheduled work**, and **64× more temporal samples**. This supports a density/time tradeoff, without establishing hardware energy or latency savings.
+
+![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
+
+The repaired 10,240-target study is running with a separate report for the 9,728 previously unexposed targets. Additional GPT-2 and DistilBERT checkpoints and evaluation criteria are pinned before scoring. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-experiments/tree/main/updates/20261105).
+
 ## Install
 
 The NumPy SDK needs Python 3.12+:
@@ -149,8 +157,7 @@ add further costs. Conventional low-bit quantization can use less storage.
 ![Audited temporal sampling cost](docs/assets/sampling.svg)
 
 The successful T8192 validation pass schedules **56.7 trillion retained stochastic
-node evaluations per seed**. Matched-work K4 uses T2048 and K8 uses T1024. Completed
-matched-quality systems comparisons remain pending. Internal K4/K8 references are
+node evaluations per seed**. Matched-work K4 uses T2048 and K8 uses T1024. Completed fixed-subset matched-resource comparisons are reported above; physical matched-quality systems measurements remain pending. Internal K4/K8 references are
 not asserted to reproduce Extropic’s proprietary weight representation.
 
 **Energy savings and hardware speedups are not measured.** The plots show where
@@ -164,9 +171,7 @@ reduction into an energy or latency claim.
 | **[pbit1](https://github.com/oramada/pbit1)** | Installable SDK, examples, figures, API, package checks |
 | **[pbit1-experiments](https://github.com/oramada/pbit1-experiments)** | Dated research snapshot, full cohort reports, protocols, source hashes, reproduction code |
 
-The completed result is conditional validation. The reserved 10,240-target
-fresh-data study has no accepted result yet; its first frontend execution failure
-is recorded in the archive. H100 matched-resource studies continue separately.
+The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved and the repaired version is running. Completed H100 fixed-subset comparisons are included in the verification update.
 Physical hardware, drift/calibration at model scale, broad model generalization,
 and a drop-in BF16 replacement remain future work.
 

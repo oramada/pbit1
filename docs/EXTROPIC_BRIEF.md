@@ -27,6 +27,8 @@ replication for time; it does not establish a 4× energy or speed gain.
 The measured T8192 run schedules 56.7 trillion retained node evaluations
 per complete validation pass. Controllers, readout, ranges and counters matter.
 
+**Completed matched-resource comparison (November 5):** an independent audit now covers 45 accepted cases. The lowest explored qualifying budget is C8192 for K1 and C1024 for K8: one-eighth the logical p-bits for K1, but eight times the retained scheduled work and 64 times the temporal samples. These are fixed-subset, backend-labelled comparisons. They establish a density/time tradeoff rather than a measured energy or latency advantage. [Full update](BROAD_VERIFICATION_20261105.md).
+
 **What would be useful to investigate with Extropic:** map the unary
 stationary-probability programming interface to actual devices; measure
 calibration and effective independent switching rate; evaluate accumulation
@@ -36,7 +38,7 @@ a reproduction of a proprietary Extropic parameter representation.
 
 **Current boundary:** This is an independent, installable research SDK and
 a conditional validation result. Reserved fresh-data evaluation has no
-accepted result yet; its initial frontend failure is documented in the archive.
+accepted result yet; its initial frontend failure is documented in the archive and the repaired complete study is running.
 No physical hardware energy, latency, residency or numerical BF16-equivalence
 claim is made. Probability encoding and stochastic computing are established;
 the contribution investigated here is the measured model-level tradeoff.
