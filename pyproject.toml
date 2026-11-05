@@ -31,7 +31,7 @@ dev = ["pytest>=8", "build>=1", "matplotlib>=3.10"]
 [project.urls]
 Homepage = "https://github.com/oramada/pbit1"
 Documentation = "https://github.com/oramada/pbit1/blob/main/docs/EXTROPIC_BRIEF.md"
-Experiments = "https://github.com/oramada/pbit1-experiments"
+Experiments = "https://github.com/oramada/pbit1-extropic"
 Issues = "https://github.com/oramada/pbit1/issues"
 
 [project.scripts]

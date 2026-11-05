@@ -7,7 +7,7 @@
   <a href="https://github.com/oramada/pbit1/releases"><img src="https://img.shields.io/badge/release-0.1.0a1-089b88" alt="Research preview 0.1.0a1"></a>
   <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.12%2B-334155" alt="Python 3.12+"></a>
   <a href="https://github.com/extropic-ai/thrml/tree/2d54cd8404df85bb65703d7e8b4e84e48c1b72a9"><img src="https://img.shields.io/badge/backend-official%20THRML-5260ce" alt="Official THRML backend"></a>
-  <a href="https://github.com/oramada/pbit1-experiments"><img src="https://img.shields.io/badge/evidence-audited%20experiments-089b88" alt="Audited experiment archive"></a>
+  <a href="https://github.com/oramada/pbit1-extropic"><img src="https://img.shields.io/badge/evidence-audited%20experiments-089b88" alt="Audited experiment archive"></a>
   <a href="https://github.com/oramada/pbit1/actions/workflows/ci.yml"><img src="https://github.com/oramada/pbit1/actions/workflows/ci.yml/badge.svg" alt="Package checks"></a>
 </p>
 
@@ -16,7 +16,7 @@
   <a href="#the-result">Results</a> · <a href="#install">Install</a> ·
   <a href="#try-it">Quickstart</a> · <a href="#the-cost-tradeoff">Costs</a> ·
   <a href="docs/EXTROPIC_BRIEF.md">Technical brief</a> ·
-  <a href="https://github.com/oramada/pbit1-experiments">Experimental archive</a>
+  <a href="https://github.com/oramada/pbit1-extropic">Experimental archive</a>
 </p>
 
 PBit1 is an independent research SDK for representing a weight through the
@@ -44,7 +44,7 @@ proof of numerical BF16 precision. BF16 receives the same adapted expected weigh
 so additional training is not counted as a representation gain.
 
 Smaller budgets are included: T1024 missed the criterion; T4096 narrowly missed it.
-The [experimental archive](https://github.com/oramada/pbit1-experiments) preserves
+The [experimental archive](https://github.com/oramada/pbit1-extropic) preserves
 all three complete cohorts, independent audits, protocols and source hashes.
 [Machine-readable figure data](benchmarks/lfm3.json) links directly to that evidence.
 
@@ -60,7 +60,7 @@ The completed matched-resource analysis now covers **45 accepted cases** with in
 
 ![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
 
-The repaired 10,240-target study is running with a separate report for the 9,728 previously unexposed targets. Additional GPT-2 and DistilBERT checkpoints and evaluation criteria are pinned before scoring. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-experiments/tree/main/updates/20261105).
+The repaired 10,240-target study is running with a separate report for the 9,728 previously unexposed targets. Additional GPT-2 and DistilBERT checkpoints and evaluation criteria are pinned before scoring. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
 
 ## Install
 
@@ -118,7 +118,7 @@ output = codec.forward(
 
 The NumPy reference sampler and official THRML backend are separate implementations.
 The SDK exposes the encoding primitives; the full LFM3 conversion and GPU research
-worker are in the [archive](https://github.com/oramada/pbit1-experiments).
+worker are in the [archive](https://github.com/oramada/pbit1-extropic).
 See [API details](docs/API.md) and the runnable [quickstart](examples/quickstart.py).
 
 ## How it works
@@ -169,7 +169,9 @@ reduction into an energy or latency claim.
 | Repository | Purpose |
 |:---|:---|
 | **[pbit1](https://github.com/oramada/pbit1)** | Installable SDK, examples, figures, API, package checks |
-| **[pbit1-experiments](https://github.com/oramada/pbit1-experiments)** | Dated research snapshot, full cohort reports, protocols, source hashes, reproduction code |
+| **[pbit1-experiments](https://github.com/oramada/pbit1-extropic)** | Dated research snapshot, full cohort reports, protocols, source hashes, reproduction code |
+
+The full experimental archive is currently **private**; access is required for its detailed artifacts. Public benchmark JSON and independent statistical audit summaries are included in this SDK.
 
 The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved and the repaired version is running. Completed H100 fixed-subset comparisons are included in the verification update.
 Physical hardware, drift/calibration at model scale, broad model generalization,

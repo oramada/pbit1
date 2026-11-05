@@ -35,6 +35,8 @@ Checkpoint/dataset revisions, file hashes, alias inventories, complete parameter
 
 ## Inspect and verify
 
-[The experimental update](https://github.com/oramada/pbit1-experiments/tree/main/updates/20261105) contains `INDEX.json`, which maps original paths to preserved archive artifacts and SHA256 digests. The experimental archive’s original [root manifest](https://github.com/oramada/pbit1-experiments/blob/main/FILES.sha256.json) and `snapshot-20261031` release remain unchanged. The dated update has its own manifest. Checkpoints, dataset arrays, raw logits and trajectories remain outside GitHub; the included audits preserve their original hashes.
+The experimental archive is private at the time of this update. Public aggregate benchmark JSON and independent statistical audit summaries are included in the SDK; the detailed case/source archive requires access.
+
+[The experimental update](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105) contains `INDEX.json`, which maps original paths to preserved archive artifacts and SHA256 digests. The experimental archive’s original [root manifest](https://github.com/oramada/pbit1-extropic/blob/main/FILES.sha256.json) and `snapshot-20261031` release remain unchanged. The dated update has its own manifest. Checkpoints, dataset arrays, raw logits and trajectories remain outside GitHub; the included audits preserve their original hashes.
 
 The broad-verification goal remains active. Additional models/tasks, nonideality operating regimes and practical systems accounting remain required. Physical hardware access is required for measured device energy/latency claims.

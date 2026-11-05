@@ -44,4 +44,4 @@ claim is made. Probability encoding and stochastic computing are established;
 the contribution investigated here is the measured model-level tradeoff.
 
 [SDK](https://github.com/oramada/pbit1) ·
-[Experiment archive](https://github.com/oramada/pbit1-experiments)
+[Experiment archive](https://github.com/oramada/pbit1-extropic)
