@@ -71,6 +71,8 @@ The first full-task, five-seed **R1 primary results are mixed** at one logical p
 
 Every learned parameter, including biases and normalization parameters, was converted. Independent audits replayed every evaluation batch from saved official THRML counts. The combined primary criterion failed; these results do **not** establish general BF16 task-quality equivalence. The original 104-case sweep continues unchanged. These are weight-reconstruction results reused across the test task, with dense BF16 software inference, rather than direct stochastic operator execution. [Primary statistics](benchmarks/r1_primary_20261105.json) · [Independent audit](benchmarks/r1_primary_audit_20261105.json).
 
+A distinct higher-budget GPT-2 follow-up is now frozen and running on four H100s: one logical p-bit per scalar, 262,144 samples, five fixed new seeds and the unchanged 2% margin. It uses the already-exposed text corpus and 32× the original sampling work; no new quality result is available. [Protocol and scope](benchmarks/highT_execution_20261105.json).
+
 ## Install
 
 The NumPy SDK needs Python 3.12+:

@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-11-05T23:41:00.345746+00:00",
+  "recorded_utc": "2026-11-05T23:51:34.639073+00:00",
   "status": "mixed_additional_R1_primary_results_audited_full_sweep_and_LFM3_heldout_running",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
@@ -76,7 +76,10 @@
     "primitive_CPU_H100_bridge": "passed6488064states",
     "production_tile_timing": "completed,1.53330seconds warmmedianat262144samples",
     "synthetic_actual_model_integration": "passed_all124439808parameters_and_samekey_weight_and_logit_bridge",
-    "new_fulltask_scoring_started": false,
-    "scope": "OriginalT8192primaryfailure unchanged. CandidateT262144is32timeslogical samplingwork, not an established modelquality or hardware result."
+    "new_fulltask_scoring_started": true,
+    "scope": "Onepbitperlearnedscalar,262144samples,fivefreshfixedMCkeys onalreadyexposedtext;32timesoriginalsamplingwork. Original8192primaryfailedandunchanged. No new qualityresult.",
+    "status": "fixed_five_seed_highTstudy_launched_four_H100jobs",
+    "protocol_sha256": "c8068f1ad89588c04ea6cf0ef4d1be630a675c4bf7f0cbb8c50296b08ad2a91c",
+    "quality_result_available": false
   }
 }
