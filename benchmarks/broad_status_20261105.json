@@ -1,6 +1,6 @@
 {
-  "recorded_utc": "2026-11-05T21:26:32.102619+00:00",
-  "status": "checkpoint_recovery_v4_first_H100_seed_submitted",
+  "recorded_utc": "2026-11-05T21:31:25.903095+00:00",
+  "status": "checkpoint_core_v4_first_H100_seed_running_under_transport_v5",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
   "accepted_matched_resource_cases": 45,
@@ -12,7 +12,8 @@
     "statistics_and_independent_forgery_rejection_fixtures": "passed",
     "v3_integration_failure": "Preserved firstBF16stage path defect; no native sampling in that attempt. Corrected in newv4namespace.",
     "legacy_replay": "Completed old6outputs must match rawbits in same-key recovery; replaywork retained separately and never added asMCseeds.",
-    "first_seed_must_complete_independent_audit_before_remaining_four": true
+    "first_seed_must_complete_independent_audit_before_remaining_four": true,
+    "v4_launch_guard": "Correctly rejected reuse of an old log directory before core inference. Old call terminal; new v5wrapper uses one shared validated path definition. Frozen scientific v4sources/protocol unchanged."
   },
   "additional_assets": {
     "checkpoint_and_dataset_pinned_hash_verification": "passed",
@@ -21,7 +22,9 @@
     "distilbert_reviews": 25000,
     "distilbert_truncation_fraction": 0.4336,
     "additional_model_quality_scoring_started": false,
-    "independent_full_data_manifest_audit": "pending"
+    "independent_full_data_manifest_audit": "passed_all283225GPT2targets_and_all25000DistilBERTrows",
+    "data_audit_sha256": "a6b79e6b37e543b3fe40712185c99372db96fca389d202c0ca3d74c3bc04b57e"
   },
-  "systems": "No universal BF16 numerical equivalence, measured physical energy/latency advantage or general-success conclusion."
+  "systems": "No universal BF16 numerical equivalence, measured physical energy/latency advantage or general-success conclusion.",
+  "transport_amendment_sha256": "506546ecaa63ca31973bc4a451813060c803bb44d95e35251b10d32c82f25f6a"
 }
