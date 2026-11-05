@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-11-05T23:32:29.795763+00:00",
+  "recorded_utc": "2026-11-05T23:41:00.345746+00:00",
   "status": "mixed_additional_R1_primary_results_audited_full_sweep_and_LFM3_heldout_running",
   "accepted_fresh_data_cases": 0,
   "completed_legacy_native_batch_outputs_preserved": 1,
@@ -62,5 +62,21 @@
       7.319554269251502
     ],
     "scope": "Small calibrated Ising operators only; no full additional-model nonideal quality result or physical hardware claim."
+  },
+  "primary_saved_count_diagnostic": {
+    "completed": true,
+    "all_aggregate_moment_gates_met": true,
+    "observed_predicted_noise_ratio": {
+      "gpt2": 1.0000000928701407,
+      "distilbert": 1.0000592590462853
+    },
+    "scope": "Aggregate5seednoise consistency, not proof of all distributions or causal layer sensitivity."
+  },
+  "highT_preparation": {
+    "primitive_CPU_H100_bridge": "passed6488064states",
+    "production_tile_timing": "completed,1.53330seconds warmmedianat262144samples",
+    "synthetic_actual_model_integration": "running",
+    "new_fulltask_scoring_started": false,
+    "scope": "OriginalT8192primaryfailure unchanged. CandidateT262144is32timeslogical samplingwork, not an established modelquality or hardware result."
   }
 }
