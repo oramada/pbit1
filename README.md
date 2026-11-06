@@ -27,6 +27,63 @@ THRML simulator**. The accompanying research converts every learned parameter in
 
 ## The result
 
+**November 6 DGX Spark research update:** repaired one-p-bit encoding passes the
+prespecified quality criteria on **three complete model/task evaluations**.
+These are ideal independent-count reconstruction experiments with BF16 neural
+execution, separate from the earlier adapted LFM3 experiment below.
+
+| Full model/task | BF16 | Operator-aware K1 | Five-seed result |
+|:---|---:|---:|:---|
+| GPT-2 · 283,225 WikiText2 targets | 25.50149 perplexity | 25.66953 perplexity | Ratio **1.00659**; MC95 **[0.99927, 1.01397]**, passes 2% limit |
+| DistilBERT · 25,000 IMDb reviews | 87.512% accuracy | 87.4944% mean accuracy | Upper MC95 accuracy decline **0.08383 percentage points**, passes 2-point limit |
+| LFM3-1.7B · 294,442 WikiText2 targets | 18.93015 perplexity | 18.97918 perplexity | Ratio **1.00259**; MC95 **[0.98751, 1.01790]**, passes 2% limit |
+
+Every learned scalar uses K1, including normalization and bias parameters. All
+three use 32,768 samples and finite 12-bit probability controls. GPT-2 has
+124,439,808 unique parameters, DistilBERT 66,955,010, and LFM3 1,728,801,536.
+Training activation measurements choose local range layouts; LFM3 also uses
+finer groups for convolution filters and normalization tensors. Metadata costs
+remain additional to the one physical binary state.
+
+At the same sample budget, original-layout GPT-2 still fails: its perplexity
+ratio is **1.05964**. The layout repair matters. All GPT-2 and DistilBERT weight
+points and 36 neural replay batches per architecture matched bitwise. All seven
+LFM3 weight points and 21 prespecified neural windows also matched using a
+separate SDK reconstruction, checking 1,430 per-parameter count hashes.
+These are previously inspected test datasets, not newly unseen data.
+
+![Three complete model evaluations](docs/assets/spark_cross_model_20261106.svg)
+
+[Cross-model results](benchmarks/spark_cross_model_20261106.json) ·
+[GPT-2 audit](benchmarks/spark_gpt2_audit_20261106.json) ·
+[DistilBERT audit](benchmarks/spark_distilbert_audit_20261106.json) ·
+[LFM3 audit](benchmarks/spark_lfm3_audit_20261106.json) ·
+[LFM3 independent replay](benchmarks/spark_lfm3_replay_20261106.json)
+
+LFM3 ran with CPU weight offloading under a 2 GiB GPU allocator cap. Its 24-block
+channel analysis and 55 fixed-draw causal interventions are diagnostic evidence,
+not separate all-K1 quality wins. Universal numerical BF16 equivalence, full-model
+native THRML execution, and physical hardware savings remain unproven. Modal jobs
+are stopped.
+
+A further five-seed GPT-2 study uses **41.7% fewer nominal sampling observations**
+while satisfying the same quality margin: PPL ratio **1.00780**, MC95
+**[0.99907, 1.01660]**. It adds 53,088 bytes of range metadata and keeps the
+maximum sample count at 32,768. All six weight points and 18 neural replay
+windows matched independently. This is a reduction in R1 reconstruction work;
+physical energy and inference latency were not measured.
+
+![Sampling work and task quality](docs/assets/sampling_quality_20261106.svg)
+
+[Sampling-budget results](benchmarks/spark_reduced_work_20261106.json) ·
+[Detailed Spark verification](docs/SPARK_VERIFICATION.md) ·
+[Full research and manuscript (private; access required)](https://github.com/oramada/pbit1-research)
+
+The **0.1.0a2.dev1 development package** includes a finite-control NumPy program API
+matching the frozen research sampler; see [its scope and example](docs/FINITE_PROGRAM.md).
+
+## Earlier adapted LFM3 result
+
 **At 8,192 samples, one logical p-bit per parameter passed the original 2% task-quality
 criterion against same-fit BF16 across five Monte Carlo seeds.**
 
@@ -60,22 +117,24 @@ The completed matched-resource analysis now covers **45 accepted cases** with in
 
 ![Completed matched-resource analysis](docs/assets/matched_resources_20261105.svg)
 
-The repaired 10,240-target study reached native inference, then was interrupted by Modal preemption. Its completed outputs are preserved. Cloud recovery and producer checkpoint fixtures now pass, and a new versioned first H100 seed has been submitted; the planned report separately covers the 9,728 previously unexposed targets. GPT-2 and DistilBERT data and all 191.4 million learned parameter codes have passed independent audits before scoring. Both actual models passed complete-parameter replacement and independent output replay on synthetic inputs. The full-task 104-case study is running on four parallel H100 jobs; its primary five-seed results are reported below. [Detailed verification update](docs/BROAD_VERIFICATION_20261105.md) · [Dated experimental artifacts](https://github.com/oramada/pbit1-extropic/tree/main/updates/20261105).
-
-The first full-task, five-seed **R1 primary results are mixed** at one logical p-bit per parameter and 8,192 samples:
-
-| Model and full task | Original BF16 | PBit1 | Frozen quality gate |
-|:---|---:|---:|:---|
-| DistilBERT SST-2 checkpoint · 25,000 IMDb reviews | 87.512% accuracy | 87.532% accuracy | **Passed** · two-percentage-point margin |
-| GPT-2 · 283,225 WikiText-2 targets | 25.5024 perplexity | 31.8679 perplexity | **Missed** · 2% relative perplexity margin |
-
-Every learned parameter, including biases and normalization parameters, was converted. Independent audits replayed every evaluation batch from saved official THRML counts. The combined primary criterion failed; these results do **not** establish general BF16 task-quality equivalence. The original 104-case sweep continues unchanged. These are weight-reconstruction results reused across the test task, with dense BF16 software inference, rather than direct stochastic operator execution. [Primary statistics](benchmarks/r1_primary_20261105.json) · [Independent audit](benchmarks/r1_primary_audit_20261105.json).
-
-A distinct higher-budget GPT-2 follow-up is now frozen and running on four H100s: one logical p-bit per scalar, 262,144 samples, five fixed new seeds and the unchanged 2% margin. It uses the already-exposed text corpus and 32× the original sampling work; no new quality result is available. [Protocol and scope](benchmarks/highT_execution_20261105.json).
+The historical November 5 verification included a failed GPT-2 cohort at
+8,192 samples and a passing DistilBERT cohort. Those failures remain in the
+archive. The repaired 10,240-target LFM3 study was interrupted by Modal
+preemption. Subsequent cloud jobs have been stopped; the current investigation
+uses the local DGX Spark. The completed local results above supersede earlier
+“running on H100” status messages without erasing their outcomes.
+[Historical verification details](docs/BROAD_VERIFICATION_20261105.md).
 
 ## Install
 
-The NumPy SDK needs Python 3.12+:
+The NumPy SDK needs Python 3.12+. For the current development package with
+finite-controller reconstruction:
+
+```bash
+python -m pip install "pbit1 @ git+https://github.com/oramada/pbit1.git@main"
+```
+
+The previously tagged research preview remains available:
 
 ```bash
 python -m pip install "pbit1 @ git+https://github.com/oramada/pbit1.git@v0.1.0a1"
@@ -171,6 +230,15 @@ The successful T8192 validation pass schedules **56.7 trillion retained stochast
 node evaluations per seed**. Matched-work K4 uses T2048 and K8 uses T1024. Completed fixed-subset matched-resource comparisons are reported above; physical matched-quality systems measurements remain pending. Internal K4/K8 references are
 not asserted to reproduce Extropic’s proprietary weight representation.
 
+A stronger native THRML operator control also combines three fixed coarse bits
+with one programmable fractional p-bit. It achieved lower dot-product MSE than
+K1 at equal scheduled node observations, using four physical elements and extra
+fixed-bit commands. Clamped elements do not undergo random transitions, so
+scheduled reads and stochastic updates are counted separately. This demonstrates
+that results depend on the spatial encoding and its control-information budget;
+a favorable comparison with a four-bit word does not establish an advantage over
+all four-element designs. [Strong spatial-control audit](benchmarks/spark_strong_spatial_control_20261106.json).
+
 **Energy savings and hardware speedups are not measured.** The plots show where
 spatial cost falls and temporal cost rises; they do not turn a logical device-count
 reduction into an energy or latency claim.
@@ -184,7 +252,7 @@ reduction into an energy or latency claim.
 
 The full experimental archive is currently **private**; access is required for its detailed artifacts. Public benchmark JSON and independent statistical audit summaries are included in this SDK.
 
-The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved; the repaired run was interrupted by platform preemption; tested checkpoint recovery is now running in a new versioned case. Completed H100 fixed-subset comparisons are included in the verification update.
+The completed result is conditional validation. The 10,240-target study has no accepted full result yet; its original frontend failure is preserved; the repaired run was interrupted by platform preemption; the cloud jobs are now stopped. Completed H100 fixed-subset comparisons are included in the verification update.
 Physical hardware, drift/calibration at model scale, broad model generalization,
 and a drop-in BF16 replacement remain future work.
 

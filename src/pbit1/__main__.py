@@ -2,6 +2,7 @@
 import argparse
 import json
 import numpy as np
+from . import __version__
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
     bank = NativeProbabilityBank(weights)
     states = bank.sample(options.seed, options.samples, options.chains)
     outputs = states.astype(np.float64) @ inputs
-    print(json.dumps({"version": "0.1.0a1", "backend": "official THRML",
+    print(json.dumps({"version": __version__, "backend": "official THRML",
         "controls": bank.controls(), "weights": weights.tolist(),
         "realized_probabilities_from_float32_controls": bank.realized_probabilities.tolist(),
         "sample_means": states.mean(axis=(0, 1)).tolist(),
