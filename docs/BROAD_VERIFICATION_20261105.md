@@ -80,6 +80,31 @@ Across these calibrated two-, three- and four-spin cases, exact output variance 
 
 Earlier archived calibration and drift studies cover synthetic nonideal operators and a selected quarter-model transformer, with explicit probe work and drift clocks. They do not establish robustness of the additional full-model R1 primaries under calibration errors, drift or coupling. These remain separate from the current ideal-unary full-task results; physical device energy, switching rate and recalibration intervals require actual device measurements.
 
+## Calibration and drift: bounded evidence and failed quality gates
+
+The existing synthetic-device studies have now been consolidated with fresh checks of every final saved token loss/prediction mean, all 150 drift-query seed rows and calibration/idle/query cost identities. Prior independent native-bit, model-hook and Brownian-path audits remain linked by their exact hashes. This adds no new stochastic trials or task examples.
+
+![Separate bounded calibration and drift experiments](assets/nonideality_limits_20261105.svg)
+
+In the **selected DistilGPT2 subset** study, 21,233,664 of 81,912,576 parameters were converted, using eight-bit probability controls and T1024. Other parameters, biases and normalizations remained FP32. Five joint synthetic-device/sampling seeds covered 4,096 targets on 64 short contexts. The original rule required at most 5% relative perplexity degradation and one percentage point of accuracy loss, with additional crossed seed/bank bounds; it is distinct from the newer full-model BF16 2% criterion.
+
+| Condition | Perplexity | Ratio to original FP32 | Original crossed quality gate |
+|:---|---:|---:|:---|
+| Original FP32 | 127.140 | 1.00000 | Reference |
+| Ideal stochastic devices | 131.597 | 1.03506 | Passed |
+| Uncalibrated synthetic devices | 1,137.355 | 8.94570 | Missed |
+| Measured 4,096-sample calibration | 135.426 | 1.06517 | **Missed** |
+
+Calibration greatly improved the uncalibrated result, but did not satisfy the frozen quality criteria. Its probes added **86.97 billion counted free-node updates**, versus 173.95 billion inference updates for one 64-context profile: 50% extra counted work for that finite stream. Static reuse could amortize it; drift or lost controls can prevent that. The numeric code/range/bias payload is 8.53125 bits per converted weight, with cell states and runtime buffers additional. These counts and payloads are not measured hardware energy or total runtime memory.
+
+In the **separate 2.36-million-weight drift operator**, ten joint device/path/sampling seeds covered three synthetic drift levels and ages 0, 8 and 32 modeled intervals. At drift SD 0.04 and age 32, retained-code mean output MSE was **0.347454**, versus **0.052109** after refreshing calibration, about 85% lower. Refresh adds another 4,096 probe sweeps. Retained and refreshed policies query at the same absolute modeled clock; one idles while the other calibrates. Intervals contain 512 sampler sweeps and have no established conversion to physical seconds. Approximate normal ten-seed error bars do not establish a hardware recalibration lifetime.
+
+[Recomputed numerical evidence and complete scope](../benchmarks/nonideality_evidence_20261105.json). The additional full-model primaries remain ideal-unary simulator tests. Successful full-model inference under calibration error, coupling and drift remains unproven; these bounded studies cannot supply that conclusion.
+
+## Full-goal evidence review
+
+The [12-requirement evidence review](../benchmarks/goal_evidence_review_20261105.json) separates completed component evidence, mixed primary outcomes, live campaigns and physical dependencies. The goal is **not complete**. The remaining campaign results are the full five-seed LFM3 holdout/unexposed analysis, complete 104-case matched-resource study, separate five-seed high-budget GPT-2 follow-up, and final quality/cost synthesis. Physical energy, latency and calibration lifetime remain unmeasured. The research SDK's checks passed at the frozen launch commit; this does not substitute for the pending scientific results.
+
 ## Higher-sampling follow-up preparation
 
 A distinct GPT-2 follow-up is being prepared at T262144, retaining one logical p-bit per scalar. It has **no completed model-quality result**. A native primitive fixture checks uint32 saved-count round-trips and independently decodes public THRML states at T8192 and T262144. CPU and H100 agree bit-for-bit on all **6,488,064 checked states**, integer counts and decoded FP32 values. It also confirms that uint16 would corrupt counts at the higher budget. [Bridge audit](../benchmarks/highT_primitive_bridge_20261105.json).
