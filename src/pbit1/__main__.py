@@ -28,14 +28,16 @@ def main(argv=None):
     parser.add_argument("--version", action="version", version=f"pbit1 {__version__}")
     parser.add_argument(
         "--backend", choices=("numpy", "thrml"), default="numpy",
-        help="numpy: independent-count reconstruction (default); thrml: official sampler",
+        help="sampler to use (default: numpy)",
     )
     parser.add_argument("--samples", type=positive_int, default=256,
                         help="observations per weight and chain (default: 256)")
-    parser.add_argument("--chains", type=positive_int, default=4,
-                        help="independent draws to average (default: 4)")
+    parser.add_argument("--runs", "--chains", dest="chains", type=positive_int, default=4,
+                        help="independent runs to average (default: 4)")
     parser.add_argument("--seed", type=nonnegative_int, default=7,
                         help="reproducible random seed (default: 7)")
+    parser.add_argument("--json", action="store_true",
+                        help="output the full result as JSON for scripts")
     options = parser.parse_args(argv)
     if options.samples > 2**32 - 1:
         parser.error("--samples must be at most 4294967295")
@@ -86,7 +88,20 @@ def main(argv=None):
                      "weight, with programmable controls and clamped endpoints. "
                      "No physical hardware or BF16-equivalence claim.",
         })
-    print(json.dumps(result, indent=2))
+    if options.json:
+        print(json.dumps(result, indent=2))
+    else:
+        backend = "NumPy" if options.backend == "numpy" else "THRML"
+        original = result["expected_dot_product"]
+        sampled = result["sampled_output_mean"]
+        print(f"PBit1 demo | {backend}")
+        print(f"{weights.size} weights | {options.samples:,} samples per weight | "
+              f"{options.chains} runs")
+        print()
+        print(f"Original result : {original:.6f}")
+        print(f"Sampled result  : {sampled:.6f}")
+        print(f"Difference      : {abs(sampled - original):.6f}")
+        print("\nUse --json for the full result.")
 
 
 if __name__ == "__main__":

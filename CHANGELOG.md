@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0a2.dev3 — November 8, 2026
+
+- Add the short `pbit1.encode(weights)` entry point; existing encoding APIs remain available.
+- Show readable CLI results by default; use `--json` for the complete machine-readable output.
+- Add `--runs` as a clearer alias for `--chains`.
+- Simplify the README, first example, and documentation navigation; add a step-by-step guide.
+
+**Compatibility:** scripts that parse CLI output must now pass `--json`. Encoding behavior and benchmark results are unchanged.
+
 ## 0.1.0a2.dev2 — November 8, 2026
 
 - Make the default CLI run with NumPy alone; select the optional official sampler with `--backend thrml`.

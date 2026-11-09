@@ -1,170 +1,78 @@
 <p align="center">
-  <img src="docs/assets/banner.svg" alt="PBit1 — precision sampled over time" width="100%">
+  <img src="docs/assets/banner.svg" alt="PBit1 — weights as probabilities" width="100%">
 </p>
 
 <p align="center">
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/version-0.1.0a2.dev3-089b88" alt="Version 0.1.0a2.dev3"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-5260ce" alt="Apache-2.0"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/version-0.1.0a2.dev2-089b88" alt="Development version 0.1.0a2.dev2"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.12%2B-334155" alt="Python 3.12+"></a>
-  <a href="https://github.com/oramada/pbit1/actions/workflows/ci.yml"><img src="https://github.com/oramada/pbit1/actions/workflows/ci.yml/badge.svg" alt="Package checks"></a>
+  <a href="https://github.com/oramada/pbit1/actions/workflows/ci.yml"><img src="https://github.com/oramada/pbit1/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
 </p>
 
-<p align="center">
-  <b>One programmable probability per parameter. Precision supplied over time.</b><br>
-  <a href="#install">Install</a> · <a href="#quickstart">Quickstart</a> ·
-  <a href="docs/README.md">Documentation</a> · <a href="#research-results">Results</a> ·
-  <a href="CHANGELOG.md">Changelog</a>
-</p>
+**Turn weights into probabilities. Recover them through sampling.**
 
-PBit1 is a small Python research SDK for representing numerical weights through
-probabilistic bits. Encode weights, reconstruct them from finite samples, and
-inspect the cost of probability controls and shared ranges. The default backend
-uses **NumPy**; an optional adapter samples with **Extropic’s official THRML**.
+PBit1 is a Python toolkit for probabilistic weights. Give it an array of numbers,
+encode it, and reconstruct an approximate array using a repeatable sample process.
+It runs on your computer with NumPy. Extropic’s THRML simulator is optional.
 
-The SDK provides encoding primitives and reproducible examples. Full-model
-experiments live in a separate research repository; this package is not a
-plug-and-play Transformers quantizer.
+## Get started
 
-## Install
-
-Requires **Python 3.12+** and Git. Install the current development version:
+Requires Python 3.12+ and Git.
 
 ```bash
 python -m pip install "pbit1 @ git+https://github.com/oramada/pbit1.git@main"
 python -m pbit1
 ```
 
-The default demo needs only NumPy. To use the pinned official THRML CPU backend:
+The demo compares an original calculation with its sampled result.
 
-```bash
-python -m pip install "pbit1[thrml] @ git+https://github.com/oramada/pbit1.git@main"
-python -m pbit1 --backend thrml --samples 1024 --chains 4
-```
-
-Use `python -m pbit1 --help` for options and `python -m pbit1 --version` for the
-installed version. The `pbit1` command provides the same interface.
-
-For reproducible installations, replace `main` with a commit hash. Earlier tagged
-releases and downloadable distributions remain in [GitHub Releases](https://github.com/oramada/pbit1/releases).
-The project is distributed through GitHub; these commands do not assume a PyPI release.
-
-## Quickstart
-
-Encode signed weights with finite probability controls, sample a reconstruction,
-and use it in an ordinary NumPy operator:
+## Use it in Python
 
 ```python
-import numpy as np
-from pbit1 import FinitePBitProgram
+import pbit1
 
-weights = np.array([[-0.7, 0.2], [0.3, 0.8], [-0.1, 0.4]], dtype=np.float32)
-inputs = np.array([[1.0, -0.5, 0.25]], dtype=np.float32)
+program = pbit1.encode([0.1, 0.5, 0.9])
+result = program.reconstruct(4096, seed=7)
 
-program = FinitePBitProgram.encode(weights, group_size=3)
-sample = program.reconstruct(32768, seed=7)
-
-print("Reference:", inputs @ weights)
-print("Sampled:  ", inputs @ sample.weights)
-print("Storage:  ", program.storage())
+print(result.weights)
 ```
 
-`sample.weights` is an FP32 array in the original tensor shape. The program uses
-12-bit probability commands, shared FP32 ranges, and exact independent-binomial
-count sampling. A fixed seed reproduces the reconstruction. The result
-approximates the weights; it does not guarantee identical numerical values.
+The output has the same shape as your input. Signed weights and NumPy matrices
+work too. Increase the sample count to reduce sampling noise; keep the seed fixed
+to repeat a result in the same environment.
 
-| Interface | Purpose | Backend |
-|:---|:---|:---|
-| [`FinitePBitProgram`](docs/FINITE_PROGRAM.md) | Finite controls, local ranges, efficient count reconstruction | NumPy |
-| [`SinglePBit`](docs/API.md#singlepbit) | Ideal affine encoding with explicit sampled weight tensors | NumPy |
-| [`NativeProbabilityBank`](docs/API.md#nativeprobabilitybank) | One logical THRML p-bit for each probability in `[0, 1]` | Optional THRML |
+[Step-by-step guide](docs/GETTING_STARTED.md) · [API reference](docs/API.md) · [Examples](examples/)
 
-Run [the quickstart](examples/quickstart.py) or [the native probability example](examples/native_probability.py).
-See the [API reference](docs/API.md) for shapes, return values, and storage accounting.
-
-## How it works
-
-For a weight in `[0, 1]`, assign `p = w`, sample a binary state, and average its
-observations. Signed weights use a shared center and radius:
-
-$$w_i=c_g+r_g(2p_i-1),\qquad \widehat{w}_{i,T}=c_g+r_g\left(2\frac{1}{T}\sum_t z_i^{(t)}-1\right).$$
-
-For independent observations, the ideal estimator variance is
-`4 r² p(1 − p) / T`. More samples reduce sampling error; finer local ranges can
-reduce its scale. Finite probability controls also introduce error that additional
-sampling does not remove.
-
-**One logical p-bit is not one bit of total storage.** Controllers, ranges,
-counters, and reconstructed arrays have separate costs. `program.storage()`
-reports its array payload and the ideal packed-control alternative explicitly.
-“FP1” is an informal project alias, not an IEEE floating-point format.
-
-## Research results
-
-The November 6 DGX Spark study converted every learned scalar in three pretrained
-models, including biases and normalization parameters. With selected local ranges,
-12-bit controls, and 32,768 samples per scalar:
-
-| Complete model/task | BF16 reference | K1 result | Five-seed quality check |
-|:---|---:|---:|:---|
-| GPT-2 · 283,225 WikiText-2 targets | PPL 25.50149 | PPL 25.66953 | Ratio 1.00659; MC95 [0.99927, 1.01397] |
-| DistilBERT · 25,000 IMDb reviews | Accuracy 87.512% | Mean accuracy 87.4944% | Upper MC95 decline 0.08383 percentage points |
-| LFM3-1.7B · 294,442 WikiText-2 targets | PPL 18.93015 | PPL 18.97918 | Ratio 1.00259; MC95 [0.98751, 1.01790] |
-
-![Complete-model quality relative to BF16](docs/assets/spark_cross_model_20261106.svg)
-
-All three selected configurations pass their predefined task-quality criteria.
-These are **independent-count weight reconstruction followed by BF16 neural
-execution**, on previously inspected benchmark datasets. The intervals describe
-sampling variability on those fixed data. They do not establish universal BF16
-numerical equivalence or physical hardware savings.
-
-A further GPT-2 policy uses **41.7% fewer nominal reconstruction observations**
-while passing the same quality margin. It adds 53,088 bytes of range metadata;
-its maximum sample count remains 32,768. This is a sampling-work result, not a
-measured latency or energy saving.
-
-The failures matter too: original-layout GPT-2 misses the quality margin at the
-same budget. Output-head diagnostics identify range orientation as a cause.
-A stronger four-element native control achieves lower operator error than K1
-at matched scheduled observations, using more elements and control information.
-
-[Detailed results and limitations](docs/SPARK_VERIFICATION.md) ·
-[Public benchmark data](benchmarks/spark_cross_model_20261106.json) ·
-[Sampling-budget audit](benchmarks/spark_reduced_work_audit_20261106.json) ·
-[Earlier experiments](docs/HISTORY.md)
-
-## Documentation and research
-
-| Resource | What you will find |
-|:---|:---|
-| [Documentation](docs/README.md) | Installation, examples, API, and experiment guides |
-| [Technical brief](docs/EXTROPIC_BRIEF.md) | Representation, evidence, and hardware questions |
-| [Research repository](https://github.com/oramada/pbit1-research) **(private)** | Manuscript, figures, research code, and audited artifacts |
-| [Original experimental archive](https://github.com/oramada/pbit1-extropic) **(private)** | Preserved earlier protocols and outcomes |
-
-The public SDK includes benchmark summaries. Access to the complete private
-research repositories must be granted separately. Large model and dataset assets
-remain subject to their own licenses and restoration requirements.
-
-## Development
+## Adjust the demo
 
 ```bash
-git clone https://github.com/oramada/pbit1.git
-cd pbit1
-python -m pip install '.[dev]'
-python -m pytest -q
-python examples/quickstart.py
-python -m build
+pbit1 --samples 4096        # Use more samples
+pbit1 --seed 42             # Try a different random draw
+pbit1 --json                # Full output for scripts and diagnostics
 ```
 
-Install `.[thrml,dev]` to include the official-backend tests. Contributions and
-reproducible bug reports are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+For the official THRML simulator, follow the [THRML setup](docs/GETTING_STARTED.md#use-thrml).
 
-## License and attribution
+## What’s included
 
-[Apache-2.0](LICENSE) · [Third-party notices](NOTICE) · [Citation](CITATION.cff)
+- A simple Python API for encoding and reconstructing weight arrays.
+- Repeatable sampling and explicit storage reporting.
+- NumPy and optional THRML backends.
+- Examples, tests, and published benchmark summaries.
 
-Independent research by Omar Ramadan and contributors. The project uses Extropic
-software without affiliation or endorsement. THRML, model checkpoints, and
-datasets retain their own licenses.
+PBit1 currently handles array encoding and simulation. Integration into a complete
+neural network is manual. Stored controls and sampling have additional costs;
+see [how it works](docs/FINITE_PROGRAM.md).
+
+## Validation
+
+Research configurations have been evaluated on GPT-2, DistilBERT, and LFM3-1.7B.
+The selected configurations met their predefined task-quality margins against
+BF16 on the tested datasets. [Read the results and test conditions](docs/SPARK_VERIFICATION.md).
+
+## Help and project information
+
+[Documentation](docs/README.md) · [Report an issue](https://github.com/oramada/pbit1/issues) ·
+[Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)
+
+Independent software by Omar Ramadan and contributors. Uses Extropic software
+without affiliation or endorsement. [Third-party notices](NOTICE).

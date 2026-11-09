@@ -1,7 +1,18 @@
 # API reference
 
-The default installation needs NumPy. Importing `pbit1`, encoding finite programs,
-and running the default CLI do not require JAX or THRML.
+For most uses, start with `pbit1.encode()`:
+
+```python
+import pbit1
+
+program = pbit1.encode([0.1, 0.5, 0.9])
+result = program.reconstruct(4096, seed=7)
+print(result.weights)
+```
+
+`encode(weights, *, group_size=128, layout="storage_flat")` is the short entry
+point for `FinitePBitProgram.encode`. Both return the same program type and use
+the same defaults. The default installation needs NumPy; THRML is optional.
 
 ## FinitePBitProgram
 
@@ -105,15 +116,19 @@ THRML sampler. It has floating-point bias fields; it is distinct from the finite
 
 ```bash
 python -m pbit1                                    # NumPy demo
-python -m pbit1 --samples 4096 --chains 4 --seed 7
+python -m pbit1 --samples 4096 --runs 4 --seed 7
+python -m pbit1 --json
 python -m pbit1 --backend thrml --samples 1024      # optional backend
 python -m pbit1 --version
 python -m pbit1 --help
 ```
 
-The `pbit1` console script accepts the same options. Both backends emit JSON with
+The `pbit1` console script accepts the same options. By default, both backends
+show a short comparison of the original and sampled results. `--runs` and
+`--chains` are aliases. Use `--json` to emit the full structured output, including
 the version, selected backend, seed, sampling budget, control costs, and reference
 and sampled dot products. NumPy adds reconstructed weights and finite-controller
 means; THRML adds observed probabilities and bias-rounded target probabilities.
 The default backend changed to NumPy in `0.1.0a2.dev2`; use `--backend thrml` to
-select the earlier native demonstration explicitly.
+select the earlier native demonstration explicitly. Since `0.1.0a2.dev3`,
+scripts that parse structured output must pass `--json`.

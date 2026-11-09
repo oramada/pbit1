@@ -1,31 +1,29 @@
-# PBit1 documentation
+# Documentation
 
-Start with the [README quickstart](../README.md#quickstart). A NumPy-only installation
-can run `python -m pbit1` immediately; the official THRML backend is optional.
+## Start here
 
-## Learn the package
+1. [Install and run your first example](GETTING_STARTED.md).
+2. [Use PBit1 in your code](API.md).
+3. [Understand samples, ranges, and storage](FINITE_PROGRAM.md).
 
-| Guide | Covers |
-|---|---|
-| [API reference](API.md) | Public interfaces, tensor shapes, outputs, and examples |
-| [Finite probability programs](FINITE_PROGRAM.md) | Group layouts, finite controls, reproducibility, and memory |
-| [NumPy example](../examples/quickstart.py) | Encode, reconstruct, inspect storage, compute an output |
-| [THRML example](../examples/native_probability.py) | Sample probability weights using the official backend |
-| [Contributing](../CONTRIBUTING.md) | Local setup, checks, and useful bug reports |
-| [Changelog](../CHANGELOG.md) | Package changes and compatibility notes |
+## Examples
 
-## Read the research
+- [Encode and reconstruct an array](../examples/quickstart.py)
+- [Use the official THRML simulator](../examples/native_probability.py)
 
-| Guide | Covers |
-|---|---|
-| [Technical brief](EXTROPIC_BRIEF.md) | The research question, evidence, and hardware boundary |
-| [DGX Spark verification](SPARK_VERIFICATION.md) | Complete model results, diagnostics, and limits |
-| [Historical results](HISTORY.md) | Earlier adapted-model and cross-GPU experiments |
-| [November 5 verification](BROAD_VERIFICATION_20261105.md) | Preserved earlier successes, failures, and nonideality studies |
-| [Public data](../benchmarks/) | Machine-readable benchmark and audit summaries |
+## Help
 
-The [complete research repository](https://github.com/oramada/pbit1-research)
-contains the manuscript and detailed artifacts and is **private**. The public
-package contains encoding primitives, not a complete pretrained-model deployment
-engine. It runs software simulations; it does not require or control physical
-Extropic hardware.
+- [Report a problem](https://github.com/oramada/pbit1/issues)
+- [Contribute a change](../CONTRIBUTING.md)
+- [See what changed](../CHANGELOG.md)
+
+## Research and benchmarks
+
+- [Current results and limitations](SPARK_VERIFICATION.md)
+- [Technical brief](EXTROPIC_BRIEF.md)
+- [Earlier experiments](HISTORY.md)
+- [November 5 verification](BROAD_VERIFICATION_20261105.md)
+- [Public benchmark data](../benchmarks/)
+
+The [full research repository](https://github.com/oramada/pbit1-research) contains
+the manuscript and experimental archive. It is private and requires access.

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pbit1"
-version = "0.1.0a2.dev2"
-description = "One programmable p-bit per neural parameter: THRML integration and audited research"
+version = "0.1.0a2.dev3"
+description = "Encode and sample probabilistic weights with NumPy and optional THRML"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "Apache-2.0"

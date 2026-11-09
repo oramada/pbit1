@@ -7,9 +7,9 @@ from pbit1 import __version__
 from pbit1.__main__ import main
 
 
-def test_default_demo_without_optional_backend(monkeypatch, capsys):
+def test_json_demo_without_optional_backend(monkeypatch, capsys):
     monkeypatch.setitem(sys.modules, "pbit1.native", None)
-    main(["--samples", "32", "--chains", "2", "--seed", "11"])
+    main(["--json", "--samples", "32", "--chains", "2", "--seed", "11"])
     result = json.loads(capsys.readouterr().out)
     assert result["backend"] == "numpy"
     assert result["version"] == __version__
@@ -53,3 +53,22 @@ def test_missing_optional_backend_has_actionable_message(monkeypatch, capsys):
         main(["--backend", "thrml"])
     assert error.value.code == 2
     assert "[thrml]" in capsys.readouterr().err
+
+
+def test_default_output_is_readable(monkeypatch, capsys):
+    monkeypatch.setitem(sys.modules, "pbit1.native", None)
+    main([])
+    text = capsys.readouterr().out
+    assert "PBit1 demo | NumPy" in text
+    assert "7 weights" in text
+    assert "Original result : 1.750000" in text
+    assert "Sampled result" in text
+    assert "Use --json" in text
+    assert "controller_storage_bytes" not in text
+
+
+def test_runs_alias_preserves_sampling(capsys):
+    main(["--json", "--runs", "3", "--seed", "12"])
+    first = json.loads(capsys.readouterr().out)
+    main(["--json", "--chains", "3", "--seed", "12"])
+    assert first == json.loads(capsys.readouterr().out)

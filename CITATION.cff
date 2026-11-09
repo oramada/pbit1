@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Ramadan
     given-names: Omar
-version: 0.1.0a2.dev2
+version: 0.1.0a2.dev3
 date-released: 2026-11-08
 url: "https://github.com/oramada/pbit1"
 license: Apache-2.0
