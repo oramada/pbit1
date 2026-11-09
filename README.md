@@ -12,13 +12,57 @@
   <a href="https://github.com/oramada/pbit1/actions/workflows/ci.yml"><img src="https://github.com/oramada/pbit1/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
 </p>
 
-**Turn weights into probabilities. Recover them through sampling.**
+**One logical p-bit per weight. Tested on models up to 1.73 billion parameters.**
 
-PBit1 is a Python toolkit for probabilistic weights. Give it an array of numbers,
-encode it, and reconstruct an approximate array using a repeatable sample process.
-It runs on your computer with NumPy. Extropic’s THRML simulator is optional.
+Your network has millions—or billions—of weights. PBit1 lets you explore a
+different way to represent them: encode each weight as a programmable probability,
+then recover precision through sampling.
 
-## Get started
+**The tradeoff: fewer binary-state bits, more sampling work.** Try it locally with
+NumPy, tune the sampling budget, and inspect the storage costs. Extropic’s official
+THRML simulator is available as an optional backend.
+
+## The benchmark: close to BF16 task quality
+
+Every learned parameter was converted in the selected research configurations,
+including biases and normalization parameters.
+
+| Model | Parameters | BF16 reference | PBit1 result | Change |
+|:---|---:|---:|---:|:---|
+| **GPT-2** | 124M | Perplexity 25.50149 | Perplexity 25.66953 | **+0.66% perplexity** |
+| **DistilBERT** | 67M | Accuracy 87.512% | Mean accuracy 87.4944% | **−0.0176 percentage points** |
+| **LFM3-1.7B** | 1.73B | Perplexity 18.93015 | Perplexity 18.97918 | **+0.26% perplexity** |
+
+All three selected configurations passed their predefined quality margins across
+five independent weight draws. A further GPT-2 configuration used **41.7% fewer
+nominal sampling observations** while passing the same margin.
+
+![Five-seed benchmark quality relative to BF16](docs/assets/spark_cross_model_20261106.svg)
+
+These model runs used 32,768 samples per weight, 12-bit probability controls,
+and shared ranges, followed by ordinary BF16 neural computation. They evaluate
+fixed, previously inspected datasets. Lower perplexity is better. These are
+task-quality results, not numerical BF16 equality, a speedup, or a memory-compression benchmark.
+
+[Benchmark details and storage costs](docs/BENCHMARKS.md) ·
+[Machine-readable results](benchmarks/spark_cross_model_20261106.json)
+
+## Where does the 16× opportunity come from?
+
+BF16 uses 16 bits per weight. One logical p-bit has one binary state:
+**16× fewer binary-state bits**, counting states alone.
+
+For the tested LFM3 model, that comparison is **3.458 GB of BF16 weights versus
+0.216 GB of binary states**. Probability controls, shared ranges, and reconstructed
+weights are additional. **The current Python package does not deliver 16× total
+model-memory compression.** Its implemented command and range arrays alone
+occupy 3.566 GB, before reconstructed weights.
+
+PBit1 makes this design space testable: measure quality, sampling work, and
+storage together before committing to a hardware implementation.
+[See the complete accounting](docs/BENCHMARKS.md#what-the-storage-numbers-mean).
+
+## Try it now
 
 Requires Python 3.12+ and Git.
 
@@ -27,9 +71,10 @@ python -m pip install "pbit1 @ git+https://github.com/oramada/pbit1.git@main"
 python -m pbit1
 ```
 
-The demo compares an original calculation with its sampled result.
+The demo shows the original result, sampled result, and difference. No model
+download or hardware access is needed.
 
-## Use it in Python
+## Use your own weights
 
 ```python
 import pbit1
@@ -40,40 +85,29 @@ result = program.reconstruct(4096, seed=7)
 print(result.weights)
 ```
 
-The output has the same shape as your input. Signed weights and NumPy matrices
-work too. Increase the sample count to reduce sampling noise; keep the seed fixed
-to repeat a result in the same environment.
-
-[Step-by-step guide](docs/GETTING_STARTED.md) · [API reference](docs/API.md) · [Examples](examples/)
-
-## Adjust the demo
+Signed weights and NumPy matrices work too. The output keeps the input shape.
+More samples generally reduce sampling noise; a fixed seed makes the draw
+repeatable in the same environment.
 
 ```bash
-pbit1 --samples 4096        # Use more samples
-pbit1 --seed 42             # Try a different random draw
-pbit1 --json                # Full output for scripts and diagnostics
+pbit1 --samples 4096        # Explore a larger sampling budget
+pbit1 --seed 42             # Try a different draw
+pbit1 --json                # Inspect controls and diagnostics
 ```
 
-For the official THRML simulator, follow the [THRML setup](docs/GETTING_STARTED.md#use-thrml).
+The SDK handles array encoding and simulation. Full-model integration and
+operator-specific range selection are manual; the three model benchmarks use
+separate research runners, not the short array example above.
 
-## What’s included
+[Getting started](docs/GETTING_STARTED.md) · [API](docs/API.md) ·
+[THRML setup](docs/GETTING_STARTED.md#use-thrml) · [Examples](examples/)
 
-- A simple Python API for encoding and reconstructing weight arrays.
-- Repeatable sampling and explicit storage reporting.
-- NumPy and optional THRML backends.
-- Examples, tests, and published benchmark summaries.
+## Built to inspect, repeat, and extend
 
-PBit1 currently handles array encoding and simulation. Integration into a complete
-neural network is manual. Stored controls and sampling have additional costs;
-see [how it works](docs/FINITE_PROGRAM.md).
-
-## Validation
-
-Research configurations have been evaluated on GPT-2, DistilBERT, and LFM3-1.7B.
-The selected configurations met their predefined task-quality margins against
-BF16 on the tested datasets. [Read the results and test conditions](docs/SPARK_VERIFICATION.md).
-
-## Help and project information
+- **Start small:** encode an array and run a CPU demo in minutes.
+- **Control the tradeoff:** choose sample counts and local weight groups.
+- **See the costs:** report probability-control and range storage explicitly.
+- **Build on the evidence:** public benchmark summaries, tests, and optional THRML integration.
 
 [Documentation](docs/README.md) · [Report an issue](https://github.com/oramada/pbit1/issues) ·
 [Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)

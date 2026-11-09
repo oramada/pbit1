@@ -19,6 +19,8 @@
 
 ## Research and benchmarks
 
+- [Benchmark results and storage accounting](BENCHMARKS.md)
+
 - [Current results and limitations](SPARK_VERIFICATION.md)
 - [Technical brief](EXTROPIC_BRIEF.md)
 - [Earlier experiments](HISTORY.md)
