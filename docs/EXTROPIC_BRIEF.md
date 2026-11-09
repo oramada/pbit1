@@ -59,6 +59,6 @@ simulation and logical device counts do not establish an energy or latency advan
 - [Public benchmark summary](../benchmarks/spark_cross_model_20261106.json)
 - [Package API](API.md)
 - [Historical experiments](HISTORY.md)
-- [Complete research and manuscript](https://github.com/oramada/pbit1-research) — private, access required
+- [Complete research and manuscript](https://github.com/oramada/pbit1-research) — public research repository
 
 Independent research; no affiliation with or endorsement by Extropic or Liquid AI.

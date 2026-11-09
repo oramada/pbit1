@@ -28,4 +28,4 @@
 - [Public benchmark data](../benchmarks/)
 
 The [full research repository](https://github.com/oramada/pbit1-research) contains
-the manuscript and experimental archive. It is private and requires access.
+the manuscript and experimental archive. Both are publicly accessible.

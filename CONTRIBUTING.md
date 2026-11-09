@@ -41,5 +41,6 @@ have separate inputs, seeds, and result files.
 
 Distinguish logical state count from controller/range storage, numerical precision
 from task quality, and simulation from measured hardware. Label changes to the
-one-p-bit constraint explicitly. Full research artifacts live in the separate
-private research repository; contributions do not imply access to that repository.
+one-p-bit constraint explicitly. Full research artifacts are available in the
+[public research repository](https://github.com/oramada/pbit1-research). Keep
+experiment contributions there and SDK changes here.
