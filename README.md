@@ -12,69 +12,63 @@
   <a href="https://github.com/oramada/pbit1/actions/workflows/ci.yml"><img src="https://github.com/oramada/pbit1/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
 </p>
 
-**One logical p-bit per weight. Tested on models up to 1.73 billion parameters.**
+**One p-bit per weight. Precision you can tune.**
 
-Your network has millions—or billions—of weights. PBit1 lets you explore a
-different way to represent them: encode each weight as a programmable probability,
-then recover precision through sampling.
+PBit1 turns weight arrays into programmable probabilities. Choose a sampling
+budget, reconstruct the weights, and measure the result. Explore the balance
+between precision and sampling work in ordinary Python—before you need
+probabilistic hardware.
 
-**The tradeoff: fewer binary-state bits, more sampling work.** Try it locally with
-NumPy, tune the sampling budget, and inspect the storage costs. Extropic’s official
-THRML simulator is available as an optional backend.
+Start locally with NumPy. Add Extropic’s official THRML simulator when you want
+to explore its sampling backend.
 
-## The benchmark: close to BF16 task quality
+[Try it now](#try-it-now) · [See the benchmarks](#measured-on-pretrained-models) ·
+[Getting started](docs/GETTING_STARTED.md)
 
-Every learned parameter was converted in the selected research configurations,
-including biases and normalization parameters.
+## Measured on pretrained models
 
-| Model | Parameters | BF16 reference | PBit1 result | Change |
-|:---|---:|---:|---:|:---|
-| **GPT-2** | 124M | Perplexity 25.50149 | Perplexity 25.66953 | **+0.66% perplexity** |
-| **DistilBERT** | 67M | Accuracy 87.512% | Mean accuracy 87.4944% | **−0.0176 percentage points** |
-| **LFM3-1.7B** | 1.73B | Perplexity 18.93015 | Perplexity 18.97918 | **+0.26% perplexity** |
+**Three tested models. Up to 1.73 billion parameters. Five weight draws per model.**
 
-All three selected configurations passed their predefined quality margins across
-five independent weight draws. A further GPT-2 configuration used **41.7% fewer
-nominal sampling observations** while passing the same margin.
+The selected research configurations encoded every learned parameter, including
+biases and normalization parameters, and met their predefined task-quality
+margins against BF16.
 
-![Five-seed benchmark quality relative to BF16](docs/assets/spark_cross_model_20261106.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="docs/assets/product_benchmarks_mobile.svg">
+  <img src="docs/assets/product_benchmarks.svg" alt="BF16 versus PBit1: GPT-2 perplexity +0.66%, DistilBERT accuracy −0.0176 percentage points, LFM3 perplexity +0.26%." width="100%">
+</picture>
 
-These model runs used 32,768 samples per weight, 12-bit probability controls,
-and shared ranges, followed by ordinary BF16 neural computation. They evaluate
-fixed, previously inspected datasets. Lower perplexity is better. These are
-task-quality results, not numerical BF16 equality, a speedup, or a memory-compression benchmark.
+The chart compares measured task scores. Full-model research runs reconstruct
+weights with 32,768 samples per scalar, 12-bit controls, and shared ranges, then
+use BF16 neural computation. The datasets were previously inspected; results
+are specific to these configurations and tasks.
 
-[Benchmark details and storage costs](docs/BENCHMARKS.md) ·
-[Machine-readable results](benchmarks/spark_cross_model_20261106.json)
+[Confidence intervals, protocols, and storage costs](docs/BENCHMARKS.md) ·
+[Chart data](benchmarks/product_chart.json)
 
-## Where does the 16× opportunity come from?
+### Spend samples where they matter
 
-BF16 uses 16 bits per weight. One logical p-bit has one binary state:
-**16× fewer binary-state bits**, counting states alone.
+In a separate GPT-2 study, a sensitivity-based allocation used **41.7% fewer
+nominal reconstruction observations** while passing the same quality margin.
+That is the design space PBit1 helps you explore: how much sampling does each
+part of a model need?
 
-For the tested LFM3 model, that comparison is **3.458 GB of BF16 weights versus
-0.216 GB of binary states**. Probability controls, shared ranges, and reconstructed
-weights are additional. **The current Python package does not deliver 16× total
-model-memory compression.** Its implemented command and range arrays alone
-occupy 3.566 GB, before reconstructed weights.
-
-PBit1 makes this design space testable: measure quality, sampling work, and
-storage together before committing to a hardware implementation.
-[See the complete accounting](docs/BENCHMARKS.md#what-the-storage-numbers-mean).
+This was a research policy, rather than an automatic SDK feature. It measures
+sampling work, not hardware speed or energy. [See the study](docs/BENCHMARKS.md#less-sampling-work-at-the-same-quality-margin).
 
 ## Try it now
 
-Requires Python 3.12+ and Git.
+Requires Python 3.12+ and Git. No model download or hardware access is needed
+for the demo.
 
 ```bash
 python -m pip install "pbit1 @ git+https://github.com/oramada/pbit1.git@main"
 python -m pbit1
 ```
 
-The demo shows the original result, sampled result, and difference. No model
-download or hardware access is needed.
+You’ll see the original result, sampled result, and difference.
 
-## Use your own weights
+## Bring your own weights
 
 ```python
 import pbit1
@@ -85,9 +79,9 @@ result = program.reconstruct(4096, seed=7)
 print(result.weights)
 ```
 
-Signed weights and NumPy matrices work too. The output keeps the input shape.
-More samples generally reduce sampling noise; a fixed seed makes the draw
-repeatable in the same environment.
+Signed weights and NumPy matrices work too. The result keeps your input shape.
+Increase the sample count to reduce sampling noise; fix the seed to repeat a
+draw in the same software environment.
 
 ```bash
 pbit1 --samples 4096        # Explore a larger sampling budget
@@ -95,19 +89,20 @@ pbit1 --seed 42             # Try a different draw
 pbit1 --json                # Inspect controls and diagnostics
 ```
 
+[Python API](docs/API.md) · [Runnable examples](examples/) ·
+[THRML setup](docs/GETTING_STARTED.md#use-thrml)
+
+## Built for experimentation you can trust
+
+- **Prototype locally.** Run with NumPy on your CPU.
+- **Tune the tradeoff.** Choose sample counts and local weight groups.
+- **Inspect the result.** Compare expected and sampled weights, with explicit storage reporting.
+- **Change the sampler.** Use the optional official THRML integration.
+
 The SDK handles array encoding and simulation. Full-model integration and
-operator-specific range selection are manual; the three model benchmarks use
-separate research runners, not the short array example above.
-
-[Getting started](docs/GETTING_STARTED.md) · [API](docs/API.md) ·
-[THRML setup](docs/GETTING_STARTED.md#use-thrml) · [Examples](examples/)
-
-## Built to inspect, repeat, and extend
-
-- **Start small:** encode an array and run a CPU demo in minutes.
-- **Control the tradeoff:** choose sample counts and local weight groups.
-- **See the costs:** report probability-control and range storage explicitly.
-- **Build on the evidence:** public benchmark summaries, tests, and optional THRML integration.
+operator-specific range selection are manual. Probability controls, ranges,
+and reconstructed arrays carry additional costs; [the storage guide](docs/BENCHMARKS.md#what-the-storage-numbers-mean)
+accounts for them separately.
 
 [Documentation](docs/README.md) · [Report an issue](https://github.com/oramada/pbit1/issues) ·
 [Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)

@@ -32,6 +32,16 @@ to every task. These datasets were inspected in prior experiments. Native THRML
 validation is at operator scale; these are not complete model runs on physical
 Extropic hardware.
 
+The README uses a direct score comparison, with separate scales for perplexity
+and classification accuracy. It shows point summaries; the intervals above
+remain part of the evidence. The chart is generated from the audited JSON:
+
+```bash
+python tools/plot_product_benchmarks.py
+```
+
+![Conditional five-seed confidence intervals relative to BF16](assets/spark_cross_model_20261106.svg)
+
 [Raw summary](../benchmarks/spark_cross_model_20261106.json) ·
 [Detailed verification](SPARK_VERIFICATION.md)
 
