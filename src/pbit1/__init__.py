@@ -1,7 +1,7 @@
 """One programmable p-bit per parameter, with temporal precision."""
 from .encodings.single_pbit import SinglePBit, SinglePBitWeights
 
-__version__ = "0.1.0a2.dev1"
+__version__ = "0.1.0a2.dev2"
 __all__ = ["SinglePBit", "SinglePBitWeights", "NativeProbabilityBank"]
 
 def __getattr__(name):

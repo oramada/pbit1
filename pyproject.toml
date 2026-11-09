@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pbit1"
-version = "0.1.0a2.dev1"
+version = "0.1.0a2.dev2"
 description = "One programmable p-bit per neural parameter: THRML integration and audited research"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -30,8 +30,8 @@ dev = ["pytest>=8", "build>=1", "matplotlib>=3.10"]
 
 [project.urls]
 Homepage = "https://github.com/oramada/pbit1"
-Documentation = "https://github.com/oramada/pbit1/blob/main/docs/EXTROPIC_BRIEF.md"
-Experiments = "https://github.com/oramada/pbit1-extropic"
+Documentation = "https://github.com/oramada/pbit1/blob/main/docs/README.md"
+Research = "https://github.com/oramada/pbit1-research"
 Issues = "https://github.com/oramada/pbit1/issues"
 
 [project.scripts]

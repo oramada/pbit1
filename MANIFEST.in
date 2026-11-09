@@ -1,4 +1,4 @@
-include LICENSE NOTICE CITATION.cff
+include LICENSE NOTICE CITATION.cff CHANGELOG.md CONTRIBUTING.md
 recursive-include docs *.md *.svg *.png
 recursive-include benchmarks *.json
 recursive-include examples *.py
