@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="docs/assets/banner.svg" alt="PBit1 — weights as probabilities" width="100%">
+  <img src="docs/assets/banner.png" alt="PBit1 — weights as probabilities" width="100%">
+</p>
+
+<p align="center">
+  <sub>PBit1 is independent and is not affiliated with or endorsed by Extropic.</sub>
 </p>
 
 <p align="center">
